@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace FE8_GUI
 {
@@ -16,6 +17,6 @@ namespace FE8_GUI
         {
             InitializeComponent();
         }
-        This is branch1 w
     }
+    This is  the branch1
 }
