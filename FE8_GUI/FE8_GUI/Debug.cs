@@ -7,27 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace FE8_GUI
 {
-    public partial class Form1 : Form
+    public partial class Debug : Form
     {
-        public Form1()
+        public Debug()
         {
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Debug Debugpanel = new Debug();
-            Debugpanel.ShowDialog();
-        }
     }
-
-    
-
-
-
-
 }
