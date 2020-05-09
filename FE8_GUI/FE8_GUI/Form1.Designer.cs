@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.Close = new System.Windows.Forms.Button();
+            this.close = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
@@ -37,10 +37,10 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.DarkOrange;
+            //global color
+            this.button1.BackColor = DeployedColor.Button;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Orange;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Location = new System.Drawing.Point(3, 48);
             this.button1.Name = "button1";
@@ -50,23 +50,24 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Close
+            // close
             // 
-            this.Close.BackColor = System.Drawing.Color.SaddleBrown;
-            this.Close.FlatAppearance.BorderColor = System.Drawing.Color.SaddleBrown;
-            this.Close.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Close.Location = new System.Drawing.Point(742, 0);
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(58, 29);
-            this.Close.TabIndex = 1;
-            this.Close.Text = "X\r\n";
-            this.Close.UseVisualStyleBackColor = false;
-            this.Close.Click += new System.EventHandler(this.button2_Click);
+            //global color
+            this.close.BackColor = DeployedColor.CloseButton;
+            this.close.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.close.Location = new System.Drawing.Point(742, 0);
+            this.close.Name = "close";
+            this.close.Size = new System.Drawing.Size(58, 29);
+            this.close.TabIndex = 1;
+            this.close.Text = "X\r\n";
+            this.close.UseVisualStyleBackColor = false;
+            this.close.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
+            //global color
+            this.label1.BackColor = DeployedColor.Button;
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.DarkOrange;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -94,13 +95,14 @@
             // 
             // Form1
             // 
+            //global color
+            this.BackColor = DeployedColor.Background;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Teal;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.Close);
+            this.Controls.Add(this.close);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.ForeColor = System.Drawing.Color.SeaShell;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -115,7 +117,7 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button close;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
