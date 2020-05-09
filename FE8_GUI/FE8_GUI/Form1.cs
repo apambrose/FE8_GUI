@@ -16,6 +16,7 @@ namespace FE8_GUI
         public Form1()
         {
             InitializeComponent();
+            this.KeyPreview = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -23,11 +24,25 @@ namespace FE8_GUI
             Debug Debugpanel = new Debug();
             Debugpanel.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Escape:
+                    ClosingConfrim closing = new ClosingConfrim();
+                    closing.ShowDialog();
+                    return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
-
-    
-
-
-
-
 }
