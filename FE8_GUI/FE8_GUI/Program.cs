@@ -16,9 +16,10 @@ namespace FE8_GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DeployedColor.Background = System.Drawing.Color.Teal;
-            DeployedColor.Button = System.Drawing.Color.Orange;
-            DeployedColor.CloseButton = System.Drawing.Color.SaddleBrown;
+            DeployedScheme.Background = System.Drawing.Color.Teal;
+            DeployedScheme.Button = System.Drawing.Color.Orange;
+            DeployedScheme.CloseButton = System.Drawing.Color.SaddleBrown;
+            DeployedScheme.ButtonStyle = System.Windows.Forms.FlatStyle.Popup;
             Application.Run(new Form1());
         }
     }
