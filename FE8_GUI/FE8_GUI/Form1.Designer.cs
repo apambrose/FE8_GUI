@@ -103,7 +103,7 @@
             this.panel1.MaximumSize = new System.Drawing.Size(240, 242);
             this.panel1.MinimumSize = new System.Drawing.Size(120, 80);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(240, 242);
+            this.panel1.Size = new System.Drawing.Size(120, 80);
             this.panel1.TabIndex = 5;
             // 
             // button6
