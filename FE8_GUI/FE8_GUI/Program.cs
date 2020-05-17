@@ -13,7 +13,7 @@ namespace FE8_GUI
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {   ///no vpn push test
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             DeployedScheme.Background = System.Drawing.Color.Teal;
