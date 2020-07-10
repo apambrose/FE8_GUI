@@ -15,6 +15,7 @@ namespace FE8_GUI
         public ClosingConfrim()
         {
             InitializeComponent();
+            DeployedScheme.ChangeColorForAll(this);
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -12,8 +12,10 @@ namespace FE8_GUI
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
+       
         static void Main()
-        {   ///no vpn push test
+        {   
+            //reading a file could 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             DeployedScheme.Background = System.Drawing.Color.Teal;
