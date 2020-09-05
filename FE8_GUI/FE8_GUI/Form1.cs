@@ -24,12 +24,13 @@ namespace FE8_GUI
             Console.WriteLine(Screen.PrimaryScreen.Bounds);
             Console.WriteLine(GetScalingFactor());
             float scale = GetScalingFactor();
-            int W = (int)((float)(Screen.PrimaryScreen.Bounds.Width) * scale);
-            int H = (int)((float)(Screen.PrimaryScreen.Bounds.Height) * scale);
-            Size size = new Size(1680,1050);
+            int W = Screen.PrimaryScreen.Bounds.Width;
+            int H = Screen.PrimaryScreen.Bounds.Height;
+
+            Size size = new Size(W,H);
             Console.WriteLine(size.Width.ToString());
             Console.WriteLine(size.Height.ToString());
-            this.ChangeLayoutSize(size);
+            this.ChangeLayoutSize(size, scale);
             DeployedScheme.ChangeColorForAll(this);
            //this.ChangeElementSize(size);
 
@@ -64,10 +65,15 @@ namespace FE8_GUI
         #endregion GetScalingFactor
 
         #region SizeManagement
-        public void ChangeLayoutSize(Size size)
+        public void ChangeLayoutSize(Size size, float scale)
         {
-            
-            if (!((size.Width >= 1680) && (size.Height >= 1050)))
+            //Although there is scaling factor, PCs will still
+            //translate the drawing scale back to the actual screen size,
+            //so here are supposed to see if the physical resolutions are supported
+            //it may be redundent to do so, but it shows what we can play with
+            int W = (int)((float)(Screen.PrimaryScreen.Bounds.Width) * scale);
+            int H = (int)((float)(Screen.PrimaryScreen.Bounds.Height) * scale);
+            if (!((W >= 1680) && (H >= 1050)))
             {
                 Console.WriteLine((int)(size.Width));
                 Console.WriteLine(size.Height);
@@ -77,7 +83,7 @@ namespace FE8_GUI
                 Console.WriteLine("the reso is too small");
             }
             
-            this.ClientSize = new System.Drawing.Size(size.Width, size.Height);
+            this.ClientSize = new System.Drawing.Size((int)(size.Width ), (int)(size.Height));
             this.layout0.Location = new System.Drawing.Point(0, 0);
             this.layout1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -90,17 +96,25 @@ namespace FE8_GUI
             //resize its column based on the deployed layouts
             //this is to achieve the dividing lines effect.
             this.layout0.Size = ClientSize;
-            Console.WriteLine((int)(size.Width * 0.3));
-            Console.WriteLine(size.Height);
+            Console.WriteLine("{0},{1}", layout0.Size.Width.ToString(), layout0.Size.Height.ToString());
+            //Console.WriteLine((int)(size.Width * 0.3));
+            //Console.WriteLine(size.Height);
             this.layout1.Size = new System.Drawing.Size((int)(size.Width * 0.3), size.Height);
             //this.panel1.Size = new System.Drawing.Size((int)(size.Width * 0.3), size.Height);
-            Console.WriteLine((size.Width * 0.4));
-            this.textBox1.Size = new System.Drawing.Size((int)(size.Width * 0.4), (int)(size.Height * 0.4));
-            this.layout2.Size = new System.Drawing.Size((int)(size.Width * 0.4), size.Height);
-            Console.WriteLine(size.Width * 0.3);
-            this.layout3.Size = new System.Drawing.Size((int)(size.Width * 0.3), size.Height);
-            this.panel2.Size = new System.Drawing.Size((int)(size.Width * 0.3), size.Height);
 
+            Console.WriteLine("From");
+            Console.WriteLine("{0},{1}",layout1.Size.Width,layout1.Size.Height);
+            this.textBox1.Size = new System.Drawing.Size((int)(size.Width * 0.4), (int)(size.Height * 0.4));
+            Console.WriteLine("{0},{1}", textBox1.Size.Width.ToString(), textBox1.Size.Height.ToString());
+
+            this.layout2.Size = new System.Drawing.Size((int)(layout0.Size.Width * 0.4), layout0.Size.Height);
+            Console.WriteLine("{0},{1}", layout2.Size.Width.ToString(), layout2.Size.Height.ToString());
+            this.layout3.Size = new System.Drawing.Size((int)(layout0.Size.Width * 0.3) , layout0.Size.Height);
+            Console.WriteLine("{0},{1}", layout3.Size.Width.ToString(), layout3.Size.Height.ToString());
+            Console.WriteLine("till");
+            this.panel2.Size = new System.Drawing.Size((int)(layout0.Size.Width * 0.3), layout0.Size.Height);
+            Console.WriteLine(size.Width);
+            Console.WriteLine(size.Height);
 
 
             return;
@@ -115,10 +129,7 @@ namespace FE8_GUI
             this.scheme.Location = new System.Drawing.Point(0, 0);
             this.scheme.Size = new System.Drawing.Size((int)(size.Width * 0.3), 0);
         }
-        public void DeployColorScheme()
-        {
 
-        }
         #endregion SizeManagement
 
 
@@ -170,7 +181,7 @@ namespace FE8_GUI
         #region Button Clicks
         private void button1_Click(object sender, EventArgs e)
         {
-            ProgramMode programwindow = new ProgramMode();
+            ProgramMode programwindow = new ProgramMode(this.Size);
             programwindow.Size = this.Size;
             programwindow.ShowDialog();
             

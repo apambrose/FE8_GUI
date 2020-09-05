@@ -22,6 +22,8 @@ namespace FE8_GUI
         public static Color Button;
         public static Color CloseButton;
         public static FlatStyle ButtonStyle;
+        public static Color TextColor;
+        public static Color InfoTextColor;
 
         //to change a form's color
         public static void ChangeColorForAll(Form form)
@@ -65,6 +67,11 @@ namespace FE8_GUI
                     ((Button)c).FlatStyle = DeployedScheme.ButtonStyle;
                     ChangeColorandPatternForAllControls(c);
 
+                }
+                else if (c is TextBox)
+                {
+                    c.BackColor = DeployedScheme.Background;
+                    c.ForeColor = DeployedScheme.InfoTextColor;
                 }
                 else if (c is FlowLayoutPanel || c is TableLayoutPanel || c is Panel)
                 {

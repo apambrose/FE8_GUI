@@ -22,6 +22,8 @@ namespace FE8_GUI
             DeployedScheme.Button = System.Drawing.Color.Orange;
             DeployedScheme.CloseButton = System.Drawing.Color.SaddleBrown;
             DeployedScheme.ButtonStyle = System.Windows.Forms.FlatStyle.Popup;
+            DeployedScheme.InfoTextColor = System.Drawing.Color.Peru;
+            DeployedScheme.TextColor = System.Drawing.Color.Wheat;
             Application.Run(new Form1());
         }
     }
