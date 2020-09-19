@@ -37,7 +37,7 @@ namespace FE8_GUI
         }
 
         #region GetScalingFactor
-        //some people tend to have a scaling factor for their desktop
+        //some people  have a scaling factor for their desktop
         //but this is going to mess up the resolution info
         //so here is a solution from GitHub
         [DllImport("gdi32.dll")]

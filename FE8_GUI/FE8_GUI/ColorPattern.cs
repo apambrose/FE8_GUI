@@ -34,14 +34,14 @@ namespace FE8_GUI
            
             foreach (Control control in form.Controls)
             {
-                loop++;
+                
                 // THIS LAYER OF CONTROLS ALSO NEED TO
                 // BE COLORED, BUT FOR THE SAKE OF RESIZING
                 // OBSERVATION, IT WILL BE FINISHED LATER IN
                 // THE CASE.
                 ChangeColorandPatternForAllControls(control);
             }
-            Console.WriteLine(loop);
+            
            
         }
        //A recursive function is needed because there
@@ -70,7 +70,7 @@ namespace FE8_GUI
                 }
                 else if (c is TextBox)
                 {
-                    c.BackColor = DeployedScheme.Background;
+                    c.BackColor = Color.White;
                     c.ForeColor = DeployedScheme.InfoTextColor;
                 }
                 else if (c is FlowLayoutPanel || c is TableLayoutPanel || c is Panel)

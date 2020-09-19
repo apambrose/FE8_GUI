@@ -9,14 +9,21 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.Windows.Input;
+using System.IO;
+
+
 
 
 namespace FE8_GUI
 {
     public partial class ProgramMode : Form
     {
-       
-       public ProgramMode(Size size)
+        bool Cancel = false;
+        char key = 'b';
+        
+        public ProgramMode(Size size)
         {
             
             InitializeComponent();
@@ -25,8 +32,12 @@ namespace FE8_GUI
             layout0.Size = new System.Drawing.Size(this.Width, this.Height);
             DeployedScheme.ChangeColorForAll(this);
             ChangelayoutSize(size);
+            this.KeyPreview = true;
+            this.KeyPress +=
+               new KeyPressEventHandler(ProgramMode_Keypress);
 
-            
+           
+
         }
         #region SizeManagementx
         public void ChangelayoutSize(Size size)
@@ -47,7 +58,11 @@ namespace FE8_GUI
 
         private void back_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
+            Form1 f = new Form1();
+            f.Size = this.Size;
+            f.ShowDialog();
+            //this.Close();
         }
 
         private void send_Click(object sender, EventArgs e)
@@ -66,6 +81,9 @@ namespace FE8_GUI
                 serialPort1.BaudRate = 2000000;
                 serialPort1.PortName = line;
                 Console.WriteLine(serialPort1.PortName);
+                serialPort1.ReadTimeout = 2000;
+                serialPort1.WriteTimeout = 500;
+                //serialPort1.DataReceived += update_Data;
                 serialPort1.Open();
                 Console.WriteLine(serialPort1.IsOpen);
                 ports.DropDownStyle = ComboBoxStyle.Simple;
@@ -87,7 +105,8 @@ namespace FE8_GUI
                 //using window.Text += ReadLine() will produce
                 //exception for window is not created in this 
                 //worker's thread but master's.
-                str = serialPort1.ReadLine();
+                try { str = serialPort1.ReadLine(); }
+                catch (Exception){ Console.WriteLine("failed to readline"); }
                 //Console.Write("finished");
 
                 
@@ -164,42 +183,81 @@ namespace FE8_GUI
                 throw ae.InnerExceptions[0]; 
             }
         }
-      
-        private void SerialPortClearBuffers()
-        {  
-            serialPort1.DiscardOutBuffer();
-            serialPort1.DiscardInBuffer();
-            serialPort1.BaseStream.Flush();
-        }
 
-        private void live_CheckedChanged(object sender, EventArgs e)
+        /*   private void SerialPortClearBuffers()
+           {  
+               serialPort1.DiscardOutBuffer();
+               serialPort1.DiscardInBuffer();
+               serialPort1.BaseStream.Flush();
+           }
+   */
+        void ProgramMode_Keypress(object sender, KeyPressEventArgs e) {
+            Console.WriteLine(e.KeyChar);
+            key =  e.KeyChar;
+            
+        }
+        private async Task<object> Update_Data()
         {
-            this.live.Checked = true;
-            if (serialPort1.IsOpen) {
-                String str = "";
-                while (this.live.Checked)
-                {
-                    str = serialPort1.ReadLine();
-                    this.window.Text += str + "\n";
-                    ProcessCmdKey()
-                }
-            }
-        }
+            
+            //bool State;
+            var tokenSource = new CancellationTokenSource();
+            var token = tokenSource.Token;
+            await Task.Run(() =>ReceiveData(this.serialPort1),token);
+           // Console.WriteLine("'a' recieved");
+            return Task.FromResult<object>(null);
 
+        }
+        private Task Update_Window(String str) {
+            this.window.Text += str;
+            return Task.FromResult<object>(null);
+        }
+        public async void ReceiveData(SerialPort port)
+        {
+            
+                
+                //await Task.Delay(TimeSpan.FromSeconds(1));
+                var buffer = new byte[2048];
+            String str="";
+            
+               
+            while (key != 'a') {
+                Console.WriteLine("in while loop1");
+                str = port.ReadLine();
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+                window.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    window.AppendText(str);
+                });
+            }
+                
+               /* using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    while (key != 'a'||(readBytes = await port.BaseStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    {
+                    
+                    memoryStream.Write(buffer, 0, readBytes);
+                    await Task.Delay(TimeSpan.FromMilliseconds(500));
+                    await Task.Run(() => Console.WriteLine(buffer));
+
+                }
+
+                    //return memoryStream;
+                }*/
+                Console.WriteLine("finished reading");
+
+            Console.WriteLine("out of while loop");
+        }
+   
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
            // serialPort1.ReadLine();
         }
-    }
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-    {
-        switch (keyData)
-        {
-            case Keys.Escape:
-                ClosingConfrim closing = new ClosingConfrim();
-                closing.ShowDialog();
-                return true;
+        private async void  live_CheckedChanged(object sender, EventArgs e) {
+            if (this.live.Checked == true) {
+              await  Update_Data();
+            }
+            
         }
-        return base.ProcessCmdKey(ref msg, keyData);
     }
+    
 }
